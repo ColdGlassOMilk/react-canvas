@@ -30,7 +30,7 @@ const HelloCanvas = () => {
     ctx.closePath();
   };
 
-  const update = (deltaTime: number) => {
+  const update = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     angle += angularSpeed * (deltaTime / 1000);
   };
 

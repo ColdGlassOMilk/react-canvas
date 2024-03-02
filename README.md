@@ -8,14 +8,14 @@ Example react component usage wrapping HTML canvas element using typescript
 import Canvas2D from "../../components/canvas2d";
 
 const HelloCanvas = () => {
-  const draw = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
-    const centerX = ctx.canvas.width / 2;
-    const centerY = ctx.canvas.height / 2;
+  const draw = (context: CanvasRenderingContext2D, deltaTime: number) => {
+    const centerX = context.canvas.width / 2;
+    const centerY = context.canvas.height / 2;
 
     // Draw a square
     const size = 5;
-    ctx.fillStyle = "red";
-    ctx.fillRect(centerX - size, centerY - size, size * 2, size * 2);
+    context.fillStyle = "red";
+    context.fillRect(centerX - size, centerY - size, size * 2, size * 2);
   };
 
   const update = (deltaTime: number) => {
@@ -28,7 +28,8 @@ const HelloCanvas = () => {
       update={update}
       backgroundColor="#111"
       fullscreen
-    />);
+    />
+  );
 };
 
 export default HelloCanvas;
@@ -43,9 +44,10 @@ All props from Canvas2D will pass on to the canvas, so `width`, `height`, `style
 
 `draw` is a required callback that passes a `context` and `deltaTime`
 
-`update` is an optional callback that passes `deltaTime`
+`update` is an optional callback that passes a `context` and `deltaTime`
+
+`targetFrameRate` will allow you to specify the interval that `update` gets called at (e.g. 60 = 60 times per second). This is independent of the `draw` callback, which will always attempt to render at the display refresh rate.
 
 ## ToDo
 
-- Handle window resize events
-- Pass events to update method
+- Pass input events to update method
