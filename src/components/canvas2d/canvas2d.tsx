@@ -2,7 +2,8 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 
 interface Canvas2DProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
   draw: (ctx: CanvasRenderingContext2D, deltaTime: number) => void;
-  update: (deltaTime: number) => void;
+  update?: (deltaTime: number) => void;
+  backgroundColor?: string;
   fullscreen?: boolean;
   refresh?: boolean;
 }
@@ -10,6 +11,7 @@ interface Canvas2DProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
 const Canvas2D: React.FC<Canvas2DProps> = ({
   draw,
   update,
+  backgroundColor,
   fullscreen,
   refresh,
   ...props
@@ -27,14 +29,19 @@ const Canvas2D: React.FC<Canvas2DProps> = ({
 
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        if (refresh) {
+        if (backgroundColor) {
+          ctx.save();
+          ctx.fillStyle = backgroundColor;
+          ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+          ctx.restore();
+        } else if (refresh) {
           ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         }
 
         draw(ctx, deltaTime);
       }
 
-      update(deltaTime);
+      if (update) update(deltaTime);
     },
     [draw, update, refresh, lastTime],
   );

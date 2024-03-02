@@ -5,17 +5,14 @@ const HelloCanvas = () => {
   const angularSpeed = Math.PI / 2; // radians per second
 
   const draw = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
-    ctx.fillStyle = "#111";
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    // Calculate the position of the rectangle on the circle
+    // Calculate the position of the circle
     const centerX = ctx.canvas.width / 2;
     const centerY = ctx.canvas.height / 2;
     const radius = Math.floor(centerX / 10);
     const positionX = centerX + radius * Math.cos(angle);
     const positionY = centerY + radius * Math.sin(angle);
 
-    // Draw a rectangle at the calculated position
+    // Draw a circle at the calculated position
     ctx.fillStyle = "aqua";
     ctx.shadowBlur = radius;
     ctx.shadowColor = "aqua";
@@ -37,7 +34,9 @@ const HelloCanvas = () => {
     angle += angularSpeed * (deltaTime / 1000);
   };
 
-  return <Canvas2D draw={draw} update={update} fullscreen />;
+  return (
+    <Canvas2D draw={draw} update={update} backgroundColor="#111" fullscreen />
+  );
 };
 
 export default HelloCanvas;
